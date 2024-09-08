@@ -9,10 +9,13 @@ using System.Text.Json;
 /// - Deserialize small string => Unity is optimal
 /// - Deserialize large string => Newton is optimal
 public class DkJsons {
+	private static readonly JsonSerializerOptions _writeIndented = new() { WriteIndented = true };
+	private static readonly JsonSerializerOptions _writeNotIndented = new() { WriteIndented = false };
+
 	/// Convert obj to json string.
 	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
 	public static string ToJson(object serializableObj, bool writeIndented = false) {
-		return JsonSerializer.Serialize(serializableObj, options: new JsonSerializerOptions { WriteIndented = writeIndented });
+		return JsonSerializer.Serialize(serializableObj, options: writeIndented ? _writeIndented : _writeNotIndented);
 	}
 
 	/// Convert json string to obj.
