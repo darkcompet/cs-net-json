@@ -2,25 +2,20 @@
 
 This provides Json converter for dotnet.
 
-- Features
 
-	```bash
-	- Json serialize/deserialize.
-	```
+## Dependencies
 
-- Dependencies
-
-	```bash
+```bash
 	# Tool.Compet.Core
 	https://github.com/darkcompet/csharp-core
-	```
+```
 
 
-## How to install
+## Installation
 
 - Just include it into project by add as git-submodule.
 	
-	```bash
-	# Tool.Compet.Json
-	git submodule add https://github.com/darkcompet/csharp-net-json.git
-	```
+```bash
+	# Tool.Compet.Core
+	git submodule add https://github.com/darkcompet/cs-net-json.git
+```
