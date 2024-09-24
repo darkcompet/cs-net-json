@@ -9,19 +9,43 @@ using System.Text.Json;
 /// - Deserialize small string => Unity is optimal
 /// - Deserialize large string => Newton is optimal
 public class DkJsons {
-	private static readonly JsonSerializerOptions _writeIndented = new() { WriteIndented = true };
-	private static readonly JsonSerializerOptions _writeNotIndented = new() { WriteIndented = false };
+	private static readonly JsonSerializerOptions WriteIndentedOpt = new() { WriteIndented = true };
+	private static readonly JsonSerializerOptions WriteNotIndentedOpt = new() { WriteIndented = false };
 
+	/// <summary>
 	/// Convert obj to json string.
 	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
+	/// </summary>
+	/// <param name="serializableObj"></param>
+	/// <param name="writeIndented"></param>
+	/// <returns></returns>
 	public static string ToJson(object serializableObj, bool writeIndented = false) {
-		return JsonSerializer.Serialize(serializableObj, options: writeIndented ? _writeIndented : _writeNotIndented);
+		return JsonSerializer.Serialize(serializableObj, options: writeIndented ? WriteIndentedOpt : WriteNotIndentedOpt);
 	}
 
+	/// <summary>
 	/// Convert json string to obj.
 	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
 	/// TechNote: Add `where T : class` to its function to allow return nullable value.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="json"></param>
+	/// <returns></returns>
 	public static T? ToObj<T>(string json) where T : class {
 		return JsonSerializer.Deserialize<T>(json);
+	}
+
+	/// <summary>
+	/// Convert given JsonElement to given type.
+	/// JsonElement is created when dotnet parse payload to object.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="element">Should be JsonElement. Otherwise, null be returned.</param>
+	/// <returns></returns>
+	public static T? ToObjFromJsonElement<T>(object element) where T : class {
+		if (element is JsonElement jsonElement) {
+			return jsonElement.Deserialize<T>();
+		}
+		return null;
 	}
 }
