@@ -16,11 +16,11 @@ public class DkJsons {
 	/// Convert obj to json string.
 	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
 	/// </summary>
-	/// <param name="serializableObj"></param>
+	/// <param name="obj"></param>
 	/// <param name="writeIndented"></param>
 	/// <returns></returns>
-	public static string ToJson(object serializableObj, bool writeIndented = false) {
-		return JsonSerializer.Serialize(serializableObj, options: writeIndented ? WriteIndentedOpt : WriteNotIndentedOpt);
+	public static string ToJson(object obj, bool writeIndented = false) {
+		return JsonSerializer.Serialize(obj, options: writeIndented ? WriteIndentedOpt : WriteNotIndentedOpt);
 	}
 
 	/// <summary>
@@ -31,8 +31,8 @@ public class DkJsons {
 	/// <typeparam name="T"></typeparam>
 	/// <param name="json"></param>
 	/// <returns></returns>
-	public static T? ToObj<T>(string json) where T : class {
-		return JsonSerializer.Deserialize<T>(json);
+	public static T? ToObj<T>(string? json) where T : class {
+		return json is null ? null : JsonSerializer.Deserialize<T>(json);
 	}
 
 	/// <summary>
