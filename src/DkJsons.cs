@@ -24,6 +24,17 @@ public class DkJsons {
 	}
 
 	/// <summary>
+	/// Convert nullable obj to json string.
+	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
+	/// </summary>
+	/// <param name="obj"></param>
+	/// <param name="writeIndented"></param>
+	/// <returns></returns>
+	public static string? ToJsonOrNull(object? obj, bool writeIndented = false) {
+		return obj is null ? null : JsonSerializer.Serialize(obj, options: writeIndented ? WriteIndentedOpt : WriteNotIndentedOpt);
+	}
+
+	/// <summary>
 	/// Convert json string to obj.
 	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
 	/// TechNote: Add `where T : class` to its function to allow return nullable value.
