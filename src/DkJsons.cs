@@ -35,7 +35,7 @@ public class DkJsons {
 	}
 
 	/// <summary>
-	/// Convert json string to obj.
+	/// Convert json string to obj without try/catch.
 	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
 	/// TechNote: Add `where T : class` to its function to allow return nullable value.
 	/// </summary>
@@ -43,52 +43,17 @@ public class DkJsons {
 	/// <param name="json"></param>
 	/// <returns></returns>
 	public static T? ToObj<T>(string? json) where T : class {
-		try {
-			return json is null ? null : JsonSerializer.Deserialize<T>(json);
-		}
-		catch {
-			return null;
-		}
-	}
-
-	/// <summary>
-	/// Convert json string to obj without try/catch enabled.
-	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
-	/// TechNote: Add `where T : class` to its function to allow return nullable value.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="json"></param>
-	/// <returns></returns>
-	public static T? ToObjOrThrow<T>(string? json) where T : class {
 		return json is null ? null : JsonSerializer.Deserialize<T>(json);
 	}
 
 	/// <summary>
-	/// Convert given JsonElement to given type.
+	/// Convert given JsonElement to given type without try/catch.
 	/// JsonElement is created when dotnet parse payload to object.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="element">Should be JsonElement. Otherwise, null be returned.</param>
 	/// <returns></returns>
 	public static T? ToObjFromJsonElement<T>(object element) where T : class {
-		try {
-			if (element is JsonElement jsonElement) {
-				return jsonElement.Deserialize<T>();
-			}
-		}
-		catch {
-		}
-		return null;
-	}
-
-	/// <summary>
-	/// Convert given JsonElement to given type without try/catch enabled.
-	/// JsonElement is created when dotnet parse payload to object.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="element">Should be JsonElement. Otherwise, null be returned.</param>
-	/// <returns></returns>
-	public static T? ToObjFromJsonElementOrThrow<T>(object element) where T : class {
 		if (element is JsonElement jsonElement) {
 			return jsonElement.Deserialize<T>();
 		}
