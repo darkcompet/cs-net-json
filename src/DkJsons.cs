@@ -9,18 +9,18 @@ using System.Text.Json;
 /// - Deserialize small string => Unity is optimal
 /// - Deserialize large string => Newton is optimal
 public class DkJsons {
-	private static readonly JsonSerializerOptions WriteIndentedOpt = new() { WriteIndented = true };
-	private static readonly JsonSerializerOptions WriteNotIndentedOpt = new() { WriteIndented = false };
+	private static readonly JsonSerializerOptions WriteIndentedOption = new() { WriteIndented = true };
+	private static readonly JsonSerializerOptions NotWriteIndentedOption = new() { WriteIndented = false };
 
 	/// <summary>
 	/// Convert obj to json string.
 	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
 	/// </summary>
 	/// <param name="obj"></param>
-	/// <param name="writeIndented"></param>
+	/// <param name="writeIndented">Default false to compact size (minification optimized)</param>
 	/// <returns></returns>
 	public static string ToJson(object obj, bool writeIndented = false) {
-		return JsonSerializer.Serialize(obj, options: writeIndented ? WriteIndentedOpt : WriteNotIndentedOpt);
+		return JsonSerializer.Serialize(obj, options: writeIndented ? WriteIndentedOption : NotWriteIndentedOption);
 	}
 
 	/// <summary>
@@ -28,10 +28,10 @@ public class DkJsons {
 	/// Each field/properties in the object should be annotated with [JsonPropertyName()] attribute
 	/// </summary>
 	/// <param name="obj"></param>
-	/// <param name="writeIndented"></param>
+	/// <param name="writeIndented">Default false to compact size (minification optimized)</param>
 	/// <returns></returns>
 	public static string? ToJsonOrNull(object? obj, bool writeIndented = false) {
-		return obj is null ? null : JsonSerializer.Serialize(obj, options: writeIndented ? WriteIndentedOpt : WriteNotIndentedOpt);
+		return obj is null ? null : JsonSerializer.Serialize(obj, options: writeIndented ? WriteIndentedOption : NotWriteIndentedOption);
 	}
 
 	/// <summary>
